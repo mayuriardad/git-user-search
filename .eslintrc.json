@@ -30,6 +30,7 @@
   "globals": {
     "React": true,
     "console": true,
-    "$": false
+    "$": false,
+    "PropTypes": true
   }
 }
