@@ -21,9 +21,6 @@ export default class SelectField extends React.Component {
       <div>
         <select onChange={this.props.handleSelect} value={this.props.sort}>
           {optionItems}
-          {/* <option key={constants.SORT_NAME_AZ} value={constants.SORT_NAME_AZ}>Sort By Name(A-Z)</option>
-        <option key={constants.SORT_NAME_ZA} value={constants.SORT_NAME_ZA}>Sort By Name(Z-A)</option> */}
-          {/* <option value="mercedes">Rank</option> */}
         </select>
       </div>
     )

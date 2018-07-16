@@ -6,7 +6,7 @@ export default class ListUsers extends React.Component {
   render() {
     let gitUsers = _.map(this.props.gitUsers, user => {
       return (
-        <UserTab username={user.login} profilePic={user.avatar_url} id={user.node_id}/>
+        <UserTab username={user.login} profilePic={user.avatar_url} id={user.node_id} showDetails={this.props.showDetails}/>
       )
     })
     return gitUsers;

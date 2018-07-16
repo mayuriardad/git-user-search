@@ -7,6 +7,7 @@ export default class UserTab extends React.Component{
       <div key={this.props.id}>
         <img src={this.props.profilePic}/>
         <p>{this.props.username}</p>
+        <button onClick={this.props.showDetails}>details</button>
       </div>
     )
   }
@@ -14,5 +15,6 @@ export default class UserTab extends React.Component{
 UserTab.propTypes = {
   username: PropTypes.string,
   profilePic: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.string,
+  showDetails: PropTypes.func
 };
