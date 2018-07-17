@@ -19,7 +19,7 @@ export default class SelectField extends React.Component {
       });
     return (
       <div>
-        <select onChange={this.props.handleSelect} value={this.props.sort}>
+        <select  className="form-control" id="sel1" onChange={this.props.handleSelect} value={this.props.sort}>
           {optionItems}
         </select>
       </div>

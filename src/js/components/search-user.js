@@ -17,45 +17,60 @@ export default class searchUser extends React.Component {
   handleSearch(event) {
     this.setState({
       searchText: event.target.value
-    }, this.searchUser)
+    })
   }
+  
   searchUser() {
     let data = { q: this.state.searchText };
     let url = APIS.GET_USERS;
     request.fetch(url, data).then(response => {
       this.setState({
         gitUsers: response.items
-      },this.sortList)
+      }, this.sortList)
     });
   }
 
-  sortList(){
+  sortList() {
     let gitUsers;
-    if(this.state.sort === constants.SORT_NAME_ZA){
-      gitUsers = _.orderBy(this.state.gitUsers, ['login'],['desc'])
+    if (this.state.sort === constants.SORT_NAME_ZA) {
+      gitUsers = _.orderBy(this.state.gitUsers, ['login'], ['desc'])
     }
-    if(this.state.sort === constants.SORT_NAME_AZ){
-      gitUsers = _.orderBy(this.state.gitUsers, ['login'],['asc'])
+    if (this.state.sort === constants.SORT_NAME_AZ) {
+      gitUsers = _.orderBy(this.state.gitUsers, ['login'], ['asc'])
     }
     this.setState({
       gitUsers
     });
   }
 
-  handleSort(event){
+  handleSort(event) {
     this.setState({
       sort: event.target.value
-    },this.sortList)
+    }, this.sortList)
   }
   render() {
     return (
       <div>
-        <div>
-          <input type="text" name="username" value={this.state.searchText} onChange={this.handleSearch.bind(this)} />
-        </div>
-        <SelectField handleSelect={this.handleSort.bind(this)} sort={this.state.sort}/>
+        <nav className="navbar-nav bg-primary">
+          <form className="form">
+            <div className="row row-margin-set">
+              <div className="margin-left-set col-md-4">
+                <div className="form-group">
+                  <SelectField handleSelect={this.handleSort.bind(this)} sort={this.state.sort} />
+                </div>
+              </div>
+              <div className="margin-right-set col-md-4">
+                <div className="form-control">
+                  <input className="no-border-input" placeholder="Search" value={this.state.searchText} onChange={this.handleSearch.bind(this)} onBlur={this.searchUser.bind(this)}/>
+                  <span className="align-icon-right fa fa-search"></span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </nav>
         <ListUsers gitUsers={this.state.gitUsers} />
       </div>
+
     )
   }
 }
