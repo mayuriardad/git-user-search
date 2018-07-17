@@ -2,7 +2,6 @@ import React from 'react';
 import APIS from '../constants/api-constants';
 import request from '../utils/request-provider';
 import ListUsers from './list-users';
-import _ from 'lodash';
 import SelectField from './common/select-field';
 import constants from '../constants/app-constants';
 

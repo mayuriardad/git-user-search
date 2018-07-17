@@ -6,7 +6,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {allRoutes}
+        <h1>hello</h1>s
       </div>
     )
   }

@@ -1,6 +1,5 @@
 import React from 'react';
 import UserTab from './common/user-tab'
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 export default class ListUsers extends React.Component {
   render() {
@@ -16,6 +15,7 @@ ListUsers.propTypes = {
   gitUsers: PropTypes.array
 }
 // // {
+
 //   "login": "mayurid",
 //   "id": 5912228,
 //   "node_id": "MDQ6VXNlcjU5MTIyMjg=",

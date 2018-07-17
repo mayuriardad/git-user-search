@@ -1,15 +1,15 @@
 const path = require('path');
-var rootPath = path.join(__dirname, '../..');
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
     index: [
-      './src/index.js'
+      path.join(__dirname, 'src/index.js')
     ]
   },
   output: {
-    path: path.join(rootPath, '/dist/'),
+    path: path.join(__dirname, '/dist/'),
     filename: '[name]-[hash].min.js',
     publicPath: '/'
   },
@@ -18,11 +18,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader',
-        query:
-        {
-          presets: ['react']
-        }
+        use: 'babel-loader'
       },
       {
         test: /\.css/,
@@ -37,10 +33,9 @@ module.exports = {
       filename: 'index.html',
       chunks: ['index']
     }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
-    // publicPath: "/assets/", // here's the change
-    // contentBase: path.join(__dirname, 'public'),
     disableHostCheck: true,
     host: '0.0.0.0',
     port: 3000,
