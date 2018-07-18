@@ -4,6 +4,8 @@ import request from '../utils/request-provider';
 import ListUsers from './list-users';
 import SelectField from './common/select-field';
 import constants from '../constants/app-constants';
+import '../../index.css';
+
 
 export default class searchUser extends React.Component {
   constructor(props) {
@@ -38,6 +40,12 @@ export default class searchUser extends React.Component {
     if (this.state.sort === constants.SORT_NAME_AZ) {
       gitUsers = _.orderBy(this.state.gitUsers, ['login'], ['asc'])
     }
+    if (this.state.sort === constants.RANK_ASC) {
+      gitUsers = _.orderBy(this.state.gitUsers, ['score'], ['asc'])
+    }
+    if (this.state.sort === constants.RANK_DESC) {
+      gitUsers = _.orderBy(this.state.gitUsers, ['score'], ['desc'])
+    }
     this.setState({
       gitUsers
     });
@@ -48,6 +56,7 @@ export default class searchUser extends React.Component {
       sort: event.target.value
     }, this.sortList)
   }
+  
   render() {
     return (
       <div>
@@ -68,7 +77,11 @@ export default class searchUser extends React.Component {
             </div>
           </form>
         </nav>
-        <ListUsers gitUsers={this.state.gitUsers} />
+        <ul className="list-unstyled result-container">
+          <br/>
+          {(this.state.gitUsers.length > 0) && <p>{`Total Results: ${this.state.gitUsers.length}`}</p>}
+          <ListUsers gitUsers={this.state.gitUsers} />
+        </ul>
       </div>
 
     )

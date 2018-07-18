@@ -1,4 +1,6 @@
 export default {
   SORT_NAME_AZ: 'SORT_NAME_AZ',
   SORT_NAME_ZA: 'SORT_NAME_ZA',
+  RANK_ASC: 'RANK_ASC',
+  RANK_DESC: 'RANK_DESC',
 }

@@ -1,6 +1,8 @@
 import constants from '../../constants/app-constants';
 import React from 'react';
 import PropTypes from 'prop-types'
+import '../../../index.css';
+
 export default class SelectField extends React.Component {
   render() {
     let options = [
@@ -11,6 +13,14 @@ export default class SelectField extends React.Component {
       {
         key: constants.SORT_NAME_ZA,
         value: 'Sort By Name(Z-A)'
+      },
+      {
+        key: constants.RANK_ASC,
+        value: 'Rank increasing order'
+      },
+      {
+        key: constants.RANK_DESC,
+        value: 'Rank decreasing order'
       }
     ]
     let optionItems = options.map(
@@ -19,7 +29,7 @@ export default class SelectField extends React.Component {
       });
     return (
       <div>
-        <select  className="form-control" id="sel1" onChange={this.props.handleSelect} value={this.props.sort}>
+        <select className="form-control" id="sel1" onChange={this.props.handleSelect} value={this.props.sort}>
           {optionItems}
         </select>
       </div>
