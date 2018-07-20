@@ -1,6 +1,7 @@
 const path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -10,8 +11,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '/dist/'),
-    filename: '[name]-[hash].min.js',
-    publicPath: '/'
+    filename: '[name]-[hash].min.js'
   },
   module: {
     rules: [
@@ -21,9 +21,12 @@ module.exports = {
         use: 'babel-loader'
       },
       {
-        test: /\.css/,
-        use: "css-loader"
-      },
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader"
+        })
+      }
     ]
   },
   plugins: [
@@ -33,6 +36,7 @@ module.exports = {
       filename: 'index.html',
       chunks: ['index']
     }),
+    new ExtractTextPlugin("index.css"),
     new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
