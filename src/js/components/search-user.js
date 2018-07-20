@@ -13,7 +13,9 @@ export default class searchUser extends React.Component {
     this.state = {
       searchText: '',
       gitUsers: [],
-      sort: constants.SORT_NAME_AZ
+      sort: constants.SORT_NAME_AZ,
+      currentPage: 1,
+      usersPerPage: constants.PER_PAGE_COUNT
     }
   }
   handleSearch(event) {
@@ -21,7 +23,7 @@ export default class searchUser extends React.Component {
       searchText: event.target.value
     })
   }
-  
+
   searchUser() {
     let data = { q: this.state.searchText };
     let url = APIS.GET_USERS;
@@ -56,8 +58,33 @@ export default class searchUser extends React.Component {
       sort: event.target.value
     }, this.sortList)
   }
-  
+
+  handlePagination(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    })
+  }
   render() {
+    const { gitUsers, currentPage, usersPerPage } = this.state;
+
+    const indexOfLastTodo = currentPage * usersPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - usersPerPage;
+    const currentUsers = gitUsers.slice(indexOfFirstTodo, indexOfLastTodo);
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(gitUsers.length / usersPerPage); i++) {
+      pageNumbers.push(i);
+    }
+    const renderPageNumbers = _.map(pageNumbers, number => {
+      return (
+        <li
+          key={number}
+          id={number}
+          onClick={this.handlePagination.bind(this)}
+        >
+          {number}
+        </li>
+      );
+    });
     return (
       <div>
         <nav className="navbar-nav bg-primary">
@@ -70,7 +97,7 @@ export default class searchUser extends React.Component {
               </div>
               <div className="margin-right-set col-md-4">
                 <div className="form-control">
-                  <input className="no-border-input" placeholder="Search" value={this.state.searchText} onChange={this.handleSearch.bind(this)} onBlur={this.searchUser.bind(this)}/>
+                  <input className="no-border-input" placeholder="Search" value={this.state.searchText} onChange={this.handleSearch.bind(this)} onBlur={this.searchUser.bind(this)} />
                   <span className="align-icon-right fa fa-search"></span>
                 </div>
               </div>
@@ -78,9 +105,12 @@ export default class searchUser extends React.Component {
           </form>
         </nav>
         <ul className="list-unstyled result-container">
-          <br/>
+          <br />
           {(this.state.gitUsers.length > 0) && <p>{`Total Results: ${this.state.gitUsers.length}`}</p>}
-          <ListUsers gitUsers={this.state.gitUsers} />
+          <ListUsers gitUsers={currentUsers} />
+        </ul>
+        <ul id="page-numbers">
+          {renderPageNumbers}
         </ul>
       </div>
 
