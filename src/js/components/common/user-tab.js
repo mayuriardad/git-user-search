@@ -32,6 +32,15 @@ export default class UserTab extends React.Component {
   }
 
   renderUserDetails() {
+    if (!this.state.userDetails.length) {
+      return (
+        <li className="list-group-item details-text-alignment">
+          <div className="row">
+            <div className="col-md-6">No repositories present</div>
+          </div>
+        </li>
+      )
+    }
     let details = _.map(this.state.userDetails, (userDetail) => {
       return (
         <li className="list-group-item details-text-alignment">
@@ -44,7 +53,7 @@ export default class UserTab extends React.Component {
     })
     return details;
   }
-  
+
   render() {
     return (
       <div>
@@ -68,7 +77,7 @@ export default class UserTab extends React.Component {
             </div>
           </div>
         </li>
-        <div className="collapse multi-collapse" style={{marginTop: '-1.5rem'}} id={`multiCollapseExample${this.props.id}`}>
+        <div className="collapse multi-collapse" style={{ marginTop: '-1.5rem' }} id={`multiCollapseExample${this.props.id}`}>
           <ul className="list-group">
             {this.renderUserDetails()}
           </ul>

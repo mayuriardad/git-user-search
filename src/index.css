@@ -69,3 +69,13 @@ body {
 .details-text-alignment.list-group-item:last-child {
 	border-bottom: 3px solid #e6e6e6;
 }
+#page-numbers {
+    list-style: none;
+    display: flex;
+}
+#page-numbers > li {
+    margin-right: 0.3em;
+    color: blue;
+    user-select: none;
+    cursor: pointer;
+}
