@@ -15,7 +15,8 @@ export default class searchUser extends React.Component {
       gitUsers: [],
       sort: constants.SORT_NAME_AZ,
       currentPage: 1,
-      usersPerPage: constants.PER_PAGE_COUNT
+      usersPerPage: constants.PER_PAGE_COUNT,
+      emptyUsers: ''
     }
   }
   handleSearch(event) {
@@ -28,6 +29,11 @@ export default class searchUser extends React.Component {
     let data = { q: this.state.searchText };
     let url = APIS.GET_USERS;
     request.fetch(url, data).then(response => {
+      if(!response.total_count){
+        this.setState({
+          emptyUsers: 'NO USERS PRESENT'
+        })
+      }
       this.setState({
         gitUsers: response.items
       }, this.sortList)
@@ -67,9 +73,9 @@ export default class searchUser extends React.Component {
   render() {
     const { gitUsers, currentPage, usersPerPage } = this.state;
 
-    const indexOfLastTodo = currentPage * usersPerPage;
-    const indexOfFirstTodo = indexOfLastTodo - usersPerPage;
-    const currentUsers = gitUsers.slice(indexOfFirstTodo, indexOfLastTodo);
+    const indexLastUser = currentPage * usersPerPage;
+    const indexFirstUser = indexLastUser - usersPerPage;
+    const currentUsers = gitUsers.slice(indexFirstUser, indexLastUser);
     const pageNumbers = [];
     for (let i = 1; i <= Math.ceil(gitUsers.length / usersPerPage); i++) {
       pageNumbers.push(i);
@@ -106,7 +112,7 @@ export default class searchUser extends React.Component {
         </nav>
         <ul className="list-unstyled result-container">
           <br />
-          {(this.state.gitUsers.length > 0) && <p>{`Total Results: ${this.state.gitUsers.length}`}</p>}
+          {(this.state.gitUsers.length > 0) ? <p>{`Total Results: ${this.state.gitUsers.length}`}</p>: <p>{this.state.emptyUsers}</p>}
           <ListUsers gitUsers={currentUsers} />
         </ul>
         <ul id="page-numbers">
